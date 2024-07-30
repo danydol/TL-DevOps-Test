@@ -64,12 +64,17 @@ In the cloud, for example, on GCP, the upgrade is done automatically without dow
 
 1. **Cluster Setup:**
    - Provision a Kubernetes cluster using a tool like `kubeadm`, `kops`, or `kind`.
+  
+   - **Done with Minikube**
 
 2. **Nginx Deployment:**
-   - Deploy nginx using helm this chart [nginx Helm](https://github.com/kubernetes/ingress-nginx/blob/main/charts/ingress-nginx).
+   - Deploy nginx using helm this chart [nginx Helm](https://github.com/kubernetes/ingress-nginx/blob/main/charts/ingress-nginx). Done
    - When you will deploy the chart as DaemonSet, when not. What are the disatvantage/advantage of a DaemonSet.
   
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+I deploy the chart as DaemonSet when i want that each node will be automatically schedule the  pods on all nodes
+I wont do it when dont wnat this be automatically schedule and when also if i have a resource limitation
   Advantages:
 - DaemonSets are ideal for running node-specific tasks such as logging, monitoring, and system management, ensuring that each node runs the required service.
 - By running the same pod on every node, DaemonSets help maintain a consistent environment across the cluster.
@@ -110,12 +115,34 @@ To pick one of those load balancers, it depends on the application type and the 
 
    - How will you deploy the aws load balancer to work with eks
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+Install ingress controller on EKS cluster with anotation of NLB st certification at ACM (aws certification manager)
+Edit the service/loadbalancer-aws-elb.yaml with service.beta.kubernetes.io/aws-load-balancer-type: nlb defenition as annotation
+add anotation of the ACM 
+When i will create ingress resource i will add the FQDN  and TLS to ingress resource and it will update the NLB target (action defualt) and TLS  listner with 443 port on NLB also will be update
+In Route53 i will create A record with route alias to NLB
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
 3.  **App Deployment:**
     - Deploy Jenkins (can be other app you choose) with helm [Jenkins Helm](https://github.com/jenkinsci/helm-charts/blob/main/charts/jenkins). 
           
 3. **Scaling:**
    - Implement horizontal and vertical pod autoscaling for nginx using helm values (in the values file)
    - What is keda for auto scaling, why to use Keda?
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  KEDA is a Kubernetes-based Event Driven Autoscaler. With KEDA, you can drive the scaling of any container in Kubernetes based on the number of events needing to be processed 
+  The Autoscale perform only on CPU/Memory by event driven such as prometehus, kafka, RabitMQ, SQS etc ...
+  KEDA supports a wide range of event sources, making it suitable for both cloud and on-premises deployments
+  Modern applications are increasingly adopting event-driven architectures, where services communicate asynchronously through events 
+  Support open telemetry 
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  
+
      
 4. **Networking:**
    - How would you restrict network between apps within the cluster? Write an example.
