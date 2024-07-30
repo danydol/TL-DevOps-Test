@@ -67,7 +67,47 @@ In the cloud, for example, on GCP, the upgrade is done automatically without dow
 
 2. **Nginx Deployment:**
    - Deploy nginx using helm this chart [nginx Helm](https://github.com/kubernetes/ingress-nginx/blob/main/charts/ingress-nginx).
-   - When you will deploy the chart as DaemonSet, when not. What are the disatvantage/advantage of a DaemonSet. What will you choose if you need to use aws load balancer
+   - When you will deploy the chart as DaemonSet, when not. What are the disatvantage/advantage of a DaemonSet.
+  
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Advantages:
+- DaemonSets are ideal for running node-specific tasks such as logging, monitoring, and system management, ensuring that each node runs the required service.
+- By running the same pod on every node, DaemonSets help maintain a consistent environment across the cluster.
+- DaemonSets simplify the deployment and management of critical services across all nodes, reducing the complexity of managing individual pod deployments on each node.
+-  When new nodes are added to the cluster, DaemonSets automatically schedule the necessary pods on these nodes, ensuring that the service scales with the cluster.
+Disadvantages:
+-  In very large clusters, having a DaemonSet pod on every node can lead to management and scaling challenges, especially if the DaemonSet pods consume significant resources, also if we need to 
+   excluded some nodes from deamonset we need to mange toleration and taints, node selctors ffinity/anti-affinity rules etc ...
+-  Running a pod on every node can lead to higher resource consumption, which might not be necessary for all applications, potentially leading to resource wastage
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+What will you choose if you need to use aws load balancer?
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+Its depened what the peorpose Thete is 4 major types of LB:
+- NLB - Layer 4	
+Supports TCP/UDP,TLS protocols, high performance 
+
+- ALB- Layer 7	
+Supports on Http/Https traffic supports advanced routing features such as host-based or path-based routing like mapping on api gateway
+- ELB - Layer 4/7
+  Supports both HTTP/HTTPS and TCP protocols, used for legacy applications that don't require advanced features
+
+GLB - Layer 3 Gateway - Layer 4 Load Balancing
+- Useful for use cases requiring integration with third-party appliances like firewalls 
+
+
+To pick one of those load balancers, it depends on the application type and the cost of the service. For HTTP/HTTPS traffic, which operates at Layer 7, I will pick the ALB if I need advanced application configuration, such as path-based routing (e.g., www.example.com/test). For Layer 4 and TCP/TLS traffic, I will choose the NLB. Other load balancers are less relevant for most scenarios.
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ל
+
+  
+
    - How will you deploy the aws load balancer to work with eks
 
 3.  **App Deployment:**
