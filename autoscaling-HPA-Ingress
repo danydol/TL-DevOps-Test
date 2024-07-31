@@ -1,0 +1,22 @@
+resources:
+    ##  limits:
+    ##    cpu: 100m
+    ##    memory: 90Mi
+    requests:
+      cpu: 100m
+      memory: 90Mi
+  # Mutually exclusive with keda autoscaling
+  autoscaling:
+    enabled: true
+    annotations: {}
+    minReplicas: 1
+    maxReplicas: 2
+    targetCPUUtilizationPercentage: 50
+    targetMemoryUtilizationPercentage: 50
+    behavior: 
+     scaleDown:
+       stabilizationWindowSeconds: 300
+       policies:
+       - type: Pods
+         value: 1
+         periodSeconds: 180
