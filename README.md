@@ -146,6 +146,30 @@ In Route53 i will create A record with route alias to NLB
      
 4. **Networking:**
    - How would you restrict network between apps within the cluster? Write an example.
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  I restrict pods by network policy and i use the to restrict within the yaml with ingress and egress policy an labels and matchlabel:
+Example:
+
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-communication
+  namespace: my-app
+spec:
+  podSelector:
+    matchLabels:
+      app: my-app
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: my-app
+
+In this policy i allowed  access only between pods with the sanme  label app: my-app, other pods with different label cant get to those apps
+  
    - Expose the Jenkins applications using Ingress.
 
 5. **Storage:**
