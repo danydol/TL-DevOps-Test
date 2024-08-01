@@ -169,11 +169,61 @@ spec:
           app: my-app
 
 In this policy i allowed  access only between pods with the sanme  label app: my-app, other pods with different label cant get to those apps
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   
    - Expose the Jenkins applications using Ingress.
 
+   -  ingress:
+    # -- Enables ingress
+    enabled: true
+
+    # Override for the default paths that map requests to the backend
+    # -- Override for the default Ingress paths
+    paths: []
+    # - backend:
+    #     serviceName: ssl-redirect
+    #     servicePort: use-annotation
+    # - backend:
+    #     serviceName: >-
+    #       {{ template "jenkins.fullname" . }}
+    #     # Don't use string here, use only integer value!
+    #     servicePort: 8080
+
+    # For Kubernetes v1.14+, use 'networking.k8s.io/v1beta1'
+    # For Kubernetes v1.19+, use 'networking.k8s.io/v1'
+    # -- Ingress API version
+    apiVersion: "extensions/v1beta1"
+    # -- Ingress labels
+    labels: 
+    # -- Ingress annotations
+    annotations: 
+      # kubernetes.io/ingress.class: nginx
+      # kubernetes.io/tls-acme: "true"
+    # For Kubernetes >= 1.18 you should specify the ingress-controller via the field ingressClassName
+    # See https://kubernetes.io/blog/2020/04/02/improvements-to-the-ingress-api-in-kubernetes-1.18/#specifying-the-class-of-an-ingress
+    ingressClassName: nginx
+
+    # Set this path to jenkinsUriPrefix above or use annotations to rewrite path
+    # -- Ingress path
+    path: /
+
+    # configures the hostname e.g. jenkins.example.com
+    # -- Ingress hostname
+    hostName: 
+     jenkins.example.com
+    resourceRootUrl:
+    # -- Ingress TLS configuration
+    tls: []
+    # - secretName: jenkins.cluster.local
+    hosts: jenkins.example.com
+
+ 
+
 5. **Storage:**
    - Configure Persistent Volumes (PVs) and Persistent Volume Claims (PVCs) for Jenkins
+  
+     See Print screen on my Root 
 
 6. **Security:**
    - Implement an example Role-Based Access Control (RBAC) on one of the namespace for example restrict a user from some namespace, 
