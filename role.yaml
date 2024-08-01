@@ -1,0 +1,12 @@
+# role.yaml
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: test  # Replace with your namespace name
+  name: example-role
+rules:
+- apiGroups: ["", "extensions", "apps"]
+  resources: ["pods", "deployments", "services"]
+  verbs: ["get", "list", "watch", "create", "update", "delete"]
+
