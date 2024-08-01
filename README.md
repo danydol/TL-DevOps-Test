@@ -228,4 +228,12 @@ In this policy i allowed  access only between pods with the sanme  label app: my
 6. **Security:**
    - Implement an example Role-Based Access Control (RBAC) on one of the namespace for example restrict a user from some namespace, 
    - What is the purpose of the of the service account - how can it be useful in scenarios over aws.
+  
+     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+ A service account is a type of non-human account that, in Kubernetes, provides a distinct identity in a Kubernetes cluster. Application Pods, system components, and entities inside and outside the cluster can use a specific ServiceAccount's credentials to identify as that ServiceAccount. This identity is useful in various situations, including authenticating to the API server or implementing identity-based security policies.
+
+ Amazon EKS supports IAM Roles for Service Accounts (IRSA) that allows cluster operators to map AWS IAM Roles to Kubernetes Service Accounts.
+
+ /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
